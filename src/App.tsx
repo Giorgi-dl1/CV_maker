@@ -1,10 +1,17 @@
 import React from 'react'
-import useForm from './hooks/useForm'
+import { BrowserRouter, Route, Routes } from 'react-router-dom'
+import CVScreen from './screens/CVScreen'
+import HomeScreen from './screens/HomeScreen'
 
 function App() {
-  const { formState } = useForm()
-  console.log(formState)
-  return <div>setup</div>
+  return (
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<HomeScreen />} />
+        <Route path="/cv/:step" element={<CVScreen />} />
+      </Routes>
+    </BrowserRouter>
+  )
 }
 
 export default App
