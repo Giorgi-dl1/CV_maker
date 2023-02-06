@@ -11,7 +11,6 @@ const Form = ({ step }: FormInterface) => {
         return <PersonalInfoInputs />
     }
   }
-  console.log(step)
   return (
     <form action="" className="mt-[77px]">
       {renderInputs(step)}

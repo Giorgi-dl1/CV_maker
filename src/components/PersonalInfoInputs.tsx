@@ -5,18 +5,15 @@ import { useNavigate } from 'react-router-dom'
 const PersonalInfoInputs = () => {
   const navigate = useNavigate()
   const { updateFormState, formState, errors, checkRequireds } = useForm()
-  const { setImage } = useForm()
 
   const imageHandler = (e: React.FormEvent<HTMLInputElement>) => {
     const target = e.target as HTMLInputElement
     const file: File = (target.files as FileList)[0]
 
-    updateFormState('image', file)
-
     const reader = new FileReader()
 
     reader.addEventListener('load', () => {
-      setImage(reader.result)
+      updateFormState('image', reader.result)
     })
     reader.readAsDataURL(file)
   }
@@ -88,6 +85,7 @@ const PersonalInfoInputs = () => {
         </label>
         <textarea
           onChange={textareaHandler}
+          value={formState['about_me']}
           name="about_me"
           id="about_me"
           placeholder="ზოგადი ინფო შენ შესახებ"
@@ -111,7 +109,7 @@ const PersonalInfoInputs = () => {
         id="phone_number"
         rule="უნდა აკმაყოფილებდეს ქართული მობილურის ნომრის ფორმატს"
       />
-      <div className="my-[160px] flex justify-end">
+      <div className="mt-[160px] mb-[65px] flex justify-end">
         <div
           onClick={() => clickHandler()}
           className="px-[35px] cursor-pointer py-[14px] rounded bg-[#6B40E3] text-white "

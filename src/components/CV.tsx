@@ -3,7 +3,7 @@ import phoneIcon from '../assets/phone.png'
 import emailIcon from '../assets/email.png'
 
 const CV = () => {
-  const { formState, image } = useForm()
+  const { formState } = useForm()
 
   return (
     <div className="max-w-[822px] min-w-[822px] w-full px-[75px] py-[48px]">
@@ -41,9 +41,9 @@ const CV = () => {
           )}
         </div>
         <div>
-          {image && (
+          {formState['image'] && (
             <img
-              src={image}
+              src={formState['image']}
               alt="hero"
               className="w-[246px] h-[246px] rounded-full object-cover"
             />

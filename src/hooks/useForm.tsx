@@ -7,15 +7,15 @@ interface FormInterface {
   updateFormState: any
   validateForm: any
   validatedInputs: any
-  image: string
-  setImage: any
   checkRequireds: any
 }
 interface FormProviderInterface {
   children: React.ReactNode
 }
 
-const initialFormState: formState = {
+const initialFormState: formState = JSON.parse(
+  localStorage.getItem('formState')!,
+) || {
   name: '',
   surname: '',
   email: '',
@@ -31,8 +31,6 @@ const initialState: FormInterface = {
   updateFormState: () => {},
   validateForm: () => {},
   validatedInputs: {},
-  image: '',
-  setImage: () => {},
   checkRequireds: () => {},
 }
 
@@ -40,9 +38,12 @@ const Form = createContext(initialState)
 
 export function FormProvider({ children }: FormProviderInterface) {
   const [formState, setFormState] = useState<formState>(initialFormState)
-  const [errors, setErrors] = useState<any>({})
-  const [validatedInputs, setValidatedInputs] = useState<any>({})
-  const [image, setImage] = useState('')
+  const [errors, setErrors] = useState<any>(
+    JSON.parse(localStorage.getItem('errors')!) || {},
+  )
+  const [validatedInputs, setValidatedInputs] = useState<any>(
+    JSON.parse(localStorage.getItem('validatedInputs')!) || {},
+  )
 
   const patterns: any = {
     name: /^[ა-ჰ]{2,}$/,
@@ -55,6 +56,10 @@ export function FormProvider({ children }: FormProviderInterface) {
     if (validatedInputs[key]) {
       const localValidatedInputs = validatedInputs
       delete localValidatedInputs[key]
+      localStorage.setItem(
+        'validatedInputs',
+        JSON.stringify(localValidatedInputs),
+      )
       setValidatedInputs(localValidatedInputs)
     }
   }
@@ -63,6 +68,7 @@ export function FormProvider({ children }: FormProviderInterface) {
     if (errors[key]) {
       let localErrors = errors
       delete localErrors[key]
+      localStorage.setItem('errors', JSON.stringify(localErrors))
       setErrors(localErrors)
     }
   }
@@ -70,26 +76,34 @@ export function FormProvider({ children }: FormProviderInterface) {
   const validateForm = (key: string, value: any) => {
     if (key === 'image') {
       const updatedValidatedIns = { ...validatedInputs, [key]: true }
+      localStorage.setItem(
+        'validatedInputs',
+        JSON.stringify(updatedValidatedIns),
+      )
       setValidatedInputs(updatedValidatedIns)
       deleteFromErrors(key)
     }
-    if (!value.length) {
-      deleteFromErrors(key)
-      deleteFromValidated(key)
-      return
-    }
     if (!patterns[key]) {
       const updatedValidatedIns = { ...validatedInputs, [key]: true }
+      localStorage.setItem(
+        'validatedInputs',
+        JSON.stringify(updatedValidatedIns),
+      )
       setValidatedInputs(updatedValidatedIns)
       return
     }
 
     if (patterns[key].test(value) && value.length) {
       const updatedValidatedIns = { ...validatedInputs, [key]: true }
+      localStorage.setItem(
+        'validatedInputs',
+        JSON.stringify(updatedValidatedIns),
+      )
       setValidatedInputs(updatedValidatedIns)
       deleteFromErrors(key)
     } else {
       const updatedErrors = { ...errors, [key]: true }
+      localStorage.setItem('errors', JSON.stringify(updatedErrors))
       setErrors(updatedErrors)
       deleteFromValidated(key)
     }
@@ -97,6 +111,7 @@ export function FormProvider({ children }: FormProviderInterface) {
 
   const updateFormState = (key: string, value: any) => {
     const updatedForm = { ...formState, [key]: value }
+    localStorage.setItem('formState', JSON.stringify(updatedForm))
     validateForm(key, value)
     setFormState(updatedForm)
   }
@@ -112,6 +127,7 @@ export function FormProvider({ children }: FormProviderInterface) {
       }
     })
     if (Object.keys(dontMatch)) {
+      localStorage.setItem('errors', JSON.stringify(dontMatch))
       setErrors(dontMatch)
     }
     return !isError
@@ -124,11 +140,9 @@ export function FormProvider({ children }: FormProviderInterface) {
       updateFormState,
       validateForm,
       validatedInputs,
-      image,
-      setImage,
       checkRequireds,
     }),
-    [formState, errors, image],
+    [formState, errors],
   )
   return <Form.Provider value={value}>{children}</Form.Provider>
 }

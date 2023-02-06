@@ -10,7 +10,7 @@ interface InputInterface {
 }
 
 const Input = ({ label, id, placeholder, rule }: InputInterface) => {
-  const { updateFormState, errors, validatedInputs } = useForm()
+  const { updateFormState, errors, validatedInputs, formState } = useForm()
 
   return (
     <div className="input-wrapper">
@@ -22,6 +22,7 @@ const Input = ({ label, id, placeholder, rule }: InputInterface) => {
       </label>
       <div className="relative">
         <input
+          value={(formState as any)[id]}
           className={`input ${
             validatedInputs[id]
               ? '!border-[#98E37E]'
