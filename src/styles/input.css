@@ -4,16 +4,70 @@
 
 @layer base {
   @font-face {
-    font-family: 'Helvetica Neue';
+    font-family: 'Helvetica Neue normal';
     src: url(../fonts/HelveticaNeue-01.ttf);
   }
+  @font-face {
+    font-family: 'Helvetica Neue medium';
+    src: url(../fonts/HelveticaNeue-Medium-11.ttf);
+  }
+  @font-face {
+    font-family: 'Helvetica Neue light';
+    src: url(../fonts/HelveticaNeue-Light-08.ttf);
+  }
+  @font-face {
+    font-family: 'Helvetica Neue bold';
+    src: url(../fonts/HelveticaNeue-Bold-02.ttf);
+  }
+  @font-face {
+    font-family: 'Helvetica Neue condesend';
+    src: url(../fonts/HelveticaNeue-CondensedBlack-10.ttf);
+  }
+  @font-face {
+    font-family: 'Helvetica Neue condesendbold';
+    src: url(../fonts/HelveticaNeue-CondensedBold-05.ttf);
+  }
   body {
-    font-family: 'Helavicta Neue';
+    font-family: 'Helavicta Neue normal';
+  }
+  textarea::-webkit-scrollbar {
+    width: 0;
   }
 }
 
 @layer components {
   .x-padding {
     @apply px-3 md:px-8 lg:px-[70px];
+  }
+  .font-helavicta-light {
+    font-family: 'Helvetica Neue light' !important;
+  }
+  .font-helavicta-medium {
+    font-family: 'Helavicta Neue medium' !important;
+  }
+  .font-helavicta-bold {
+    font-family: 'Helavicta Neue bold' !important;
+  }
+  .font-helavicta-condensend {
+    font-family: 'Helavicta Neue condensend' !important;
+  }
+  .font-helavicta-condensendbold {
+    font-family: 'Helavicta Neue condensendbold' !important;
+    letter-spacing: 2px;
+  }
+  .input-wrapper {
+    @apply flex flex-col space-y-[8px];
+  }
+  .label {
+    @apply font-semibold font-helavicta-medium;
+  }
+  .input {
+    @apply px-[16px] placeholder:text-[#00000099] w-full py-[13px] outline-none rounded border border-[#BCBCBC];
+  }
+  .rule {
+    @apply font-helavicta-light text-[#2E2E2E];
+  }
+  .cv-header {
+    @apply text-[#F93B1D] text-[18px] font-helavicta-bold font-bold;
   }
 }

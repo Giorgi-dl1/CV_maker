@@ -1,4 +1,3 @@
-import React from 'react'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import CVScreen from './screens/CVScreen'
 import HomeScreen from './screens/HomeScreen'
