@@ -1,6 +1,7 @@
 import useForm from '../hooks/useForm'
 import phoneIcon from '../assets/phone.png'
 import emailIcon from '../assets/email.png'
+import { formatNumber } from '../utils'
 
 const CV = () => {
   const { formState } = useForm()
@@ -30,7 +31,7 @@ const CV = () => {
                 alt="phone icon"
                 className="w-[16px] h-[16px]"
               />
-              <span>{formState['phone_number']}</span>
+              <span>{formatNumber(formState['phone_number'])}</span>
             </div>
           )}
           {formState['about_me'] && (

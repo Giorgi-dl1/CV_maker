@@ -1,6 +1,7 @@
 import useForm from '../hooks/useForm'
 import passes from '../assets/passes.png'
 import errorIcon from '../assets/error.png'
+import { formatNumber } from '../utils'
 
 interface InputInterface {
   label: string
@@ -11,6 +12,7 @@ interface InputInterface {
 
 const Input = ({ label, id, placeholder, rule }: InputInterface) => {
   const { updateFormState, errors, validatedInputs, formState } = useForm()
+  const value = (formState as any)[id]
 
   return (
     <div className="input-wrapper">
@@ -22,7 +24,7 @@ const Input = ({ label, id, placeholder, rule }: InputInterface) => {
       </label>
       <div className="relative">
         <input
-          value={(formState as any)[id]}
+          value={id === 'phone_number' ? formatNumber(value) : value}
           className={`input ${
             validatedInputs[id]
               ? '!border-[#98E37E]'

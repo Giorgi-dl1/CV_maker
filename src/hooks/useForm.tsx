@@ -1,5 +1,5 @@
 import { createContext, useContext, useMemo, useState } from 'react'
-import { formState } from '../types'
+import { experience, formState } from '../types'
 
 interface FormInterface {
   formState: formState
@@ -13,6 +13,14 @@ interface FormProviderInterface {
   children: React.ReactNode
 }
 
+const initialExperience: experience = {
+  position: '',
+  employer: '',
+  start_date: '',
+  due_date: '',
+  description: '',
+}
+
 const initialFormState: formState = JSON.parse(
   localStorage.getItem('formState')!,
 ) || {
@@ -20,11 +28,10 @@ const initialFormState: formState = JSON.parse(
   surname: '',
   email: '',
   phone_number: '',
-  experiences: [],
+  experiences: [initialExperience],
   educations: [],
   image: '',
 }
-
 const initialState: FormInterface = {
   formState: initialFormState,
   errors: {},
@@ -49,7 +56,7 @@ export function FormProvider({ children }: FormProviderInterface) {
     name: /^[ა-ჰ]{2,}$/,
     surname: /^[ა-ჰ]{2,}$/,
     email: /^[a-zA-Z0-9._%+-]+@redberry.ge$/,
-    phone_number: /^(\+995)?(\s?(5\d{2}|79\d{1})\s?(\d{2})\s?(\d{2})\s?(\d{2})|-?(5\d{2}|79\d{1})-?\d{2}-?\d{2}-?\d{2}|(\d{7})\d{3})|(\s?(5\d{2}|79\d{1})\s?(\d{3})\s?(\d{3}))$/,
+    phone_number: /^(\+9955\d{8}|\+99579\d{7})$/,
   }
 
   const deleteFromValidated = (key: string) => {
@@ -109,10 +116,30 @@ export function FormProvider({ children }: FormProviderInterface) {
     }
   }
 
+  const formatPhoneNumber = (string: string) => {
+    let number: any = string
+
+    if (!number.length) {
+      number = ''
+      return number
+    }
+    number = number.replace(/[^\+\d]/g, '')
+    if (!number.startsWith('+995') && number.length > 3) {
+      number = `+995${number}`
+    }
+
+    return number
+  }
+
   const updateFormState = (key: string, value: any) => {
-    const updatedForm = { ...formState, [key]: value }
+    let localValue = value
+    if (key === 'phone_number') {
+      localValue = formatPhoneNumber(value)
+    }
+
+    const updatedForm = { ...formState, [key]: localValue }
     localStorage.setItem('formState', JSON.stringify(updatedForm))
-    validateForm(key, value)
+    validateForm(key, localValue)
     setFormState(updatedForm)
   }
 
