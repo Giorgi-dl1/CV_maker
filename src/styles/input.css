@@ -20,6 +20,10 @@
     src: url(../fonts/HelveticaNeue-Bold-02.ttf);
   }
   @font-face {
+    font-family: 'Helvetica Neue normal italic';
+    src: url(../fonts/HelveticaNeue-Italic-03.ttf);
+  }
+  @font-face {
     font-family: 'Helvetica Neue condesend';
     src: url(../fonts/HelveticaNeue-CondensedBlack-10.ttf);
   }
@@ -40,6 +44,9 @@
     @apply px-3 md:px-8 lg:px-[70px];
   }
   .font-helavicta-light {
+    font-family: 'Helvetica Neue light' !important;
+  }
+  .font-helavicta-italic {
     font-family: 'Helvetica Neue light' !important;
   }
   .font-helavicta-medium {
@@ -69,5 +76,11 @@
   }
   .cv-header {
     @apply text-[#F93B1D] text-[18px] font-helavicta-bold font-bold;
+  }
+  .inputs-between {
+    @apply flex md:gap-[16px] lg:gap-[56px] flex-wrap;
+  }
+  .button {
+    @apply px-[35px] cursor-pointer py-[14px] rounded bg-[#6B40E3] text-white max-w-max;
   }
 }

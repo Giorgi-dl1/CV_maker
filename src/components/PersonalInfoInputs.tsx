@@ -32,7 +32,6 @@ const PersonalInfoInputs = () => {
   const requiredFields = ['name', 'surname', 'image', 'email', 'phone_number']
 
   const clickHandler = () => {
-    console.log(checkRequireds(requiredFields))
     if (checkRequireds(requiredFields)) {
       navigate('/cv/experience')
     }
@@ -40,7 +39,7 @@ const PersonalInfoInputs = () => {
 
   return (
     <>
-      <div className="flex md:gap-[16px] lg:gap-[56px] flex-wrap">
+      <div className="inputs-between">
         <div className="flex-grow">
           <Input
             label="სახელი"
@@ -84,6 +83,7 @@ const PersonalInfoInputs = () => {
           ჩემ შესახებ (არასავალდებულო)
         </label>
         <textarea
+          onBlur={(e) => updateFormState('about_me', e.target.value.trim())}
           onChange={textareaHandler}
           value={formState['about_me']}
           name="about_me"
@@ -110,10 +110,7 @@ const PersonalInfoInputs = () => {
         rule="უნდა აკმაყოფილებდეს ქართული მობილურის ნომრის ფორმატს"
       />
       <div className="mt-[160px] mb-[65px] flex justify-end">
-        <div
-          onClick={() => clickHandler()}
-          className="px-[35px] cursor-pointer py-[14px] rounded bg-[#6B40E3] text-white "
-        >
+        <div onClick={() => clickHandler()} className="button">
           შემდეგი
         </div>
       </div>
