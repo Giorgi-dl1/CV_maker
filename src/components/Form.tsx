@@ -1,3 +1,4 @@
+import ExperienceInputs from './ExperienceInputs'
 import PersonalInfoInputs from './PersonalInfoInputs'
 
 interface FormInterface {
@@ -9,6 +10,8 @@ const Form = ({ step }: FormInterface) => {
     switch (step) {
       case 'personal_info':
         return <PersonalInfoInputs />
+      case 'experience':
+        return <ExperienceInputs />
     }
   }
   return (

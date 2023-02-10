@@ -23,3 +23,19 @@ export type formState = {
   image: string
   about_me?: string
 }
+
+export interface FormInterface {
+  formState: formState
+  errors: any
+  updateFormState: any
+  validateForm: any
+  validatedInputs: any
+  checkRequireds: any
+  addFieldsStack: any
+  checkRequiredsInArray: any
+  checkObjectFields: any
+  resetForm: any
+}
+export interface FormProviderInterface {
+  children: React.ReactNode
+}

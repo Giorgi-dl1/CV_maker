@@ -1,45 +1,19 @@
 import { createContext, useContext, useMemo, useState } from 'react'
-import { experience, formState } from '../types'
-
-interface FormInterface {
-  formState: formState
-  errors: any
-  updateFormState: any
-  validateForm: any
-  validatedInputs: any
-  checkRequireds: any
-}
-interface FormProviderInterface {
-  children: React.ReactNode
-}
-
-const initialExperience: experience = {
-  position: '',
-  employer: '',
-  start_date: '',
-  due_date: '',
-  description: '',
-}
-
-const initialFormState: formState = JSON.parse(
-  localStorage.getItem('formState')!,
-) || {
-  name: '',
-  surname: '',
-  email: '',
-  phone_number: '',
-  experiences: [initialExperience],
-  educations: [],
-  image: '',
-}
-const initialState: FormInterface = {
-  formState: initialFormState,
-  errors: {},
-  updateFormState: () => {},
-  validateForm: () => {},
-  validatedInputs: {},
-  checkRequireds: () => {},
-}
+import {
+  initialExperience,
+  initialFormState,
+  initialState,
+} from '../initialVariables'
+import { patterns } from '../patterns'
+import { FormProviderInterface, formState } from '../types'
+import {
+  addProperty,
+  checkErrors,
+  checkObjectFields,
+  checkRequiredStrings,
+  formatPhoneNumber,
+  removeProperty,
+} from '../utils'
 
 const Form = createContext(initialState)
 
@@ -51,13 +25,6 @@ export function FormProvider({ children }: FormProviderInterface) {
   const [validatedInputs, setValidatedInputs] = useState<any>(
     JSON.parse(localStorage.getItem('validatedInputs')!) || {},
   )
-
-  const patterns: any = {
-    name: /^[ა-ჰ]{2,}$/,
-    surname: /^[ა-ჰ]{2,}$/,
-    email: /^[a-zA-Z0-9._%+-]+@redberry.ge$/,
-    phone_number: /^(\+9955\d{8}|\+99579\d{7})$/,
-  }
 
   const deleteFromValidated = (key: string) => {
     if (validatedInputs[key]) {
@@ -116,48 +83,147 @@ export function FormProvider({ children }: FormProviderInterface) {
     }
   }
 
-  const formatPhoneNumber = (string: string) => {
-    let number: any = string
+  const validateFormArray = (
+    key: string,
+    index: number,
+    property: string,
+    value: string,
+  ) => {
+    if (patterns[property].test(value)) {
+      const { isChanged, obj: validatedIns } = addProperty(
+        validatedInputs,
+        key,
+        property,
+        index,
+      )
 
-    if (!number.length) {
-      number = ''
-      return number
-    }
-    number = number.replace(/[^\+\d]/g, '')
-    if (!number.startsWith('+995') && number.length > 3) {
-      number = `+995${number}`
-    }
+      if (isChanged) {
+        localStorage.setItem('validatedInputs', JSON.stringify(validatedIns))
+        setValidatedInputs(validatedIns)
+      }
 
-    return number
+      // delete from errors
+      const { isChanged: errorsChanged, obj: lErrors } = removeProperty(
+        errors,
+        key,
+        property,
+        index,
+      )
+      if (errorsChanged) {
+        localStorage.setItem('errors', JSON.stringify(lErrors))
+        setErrors(lErrors)
+      }
+    } else {
+      // add to errors
+      const { isChanged: errorsChanged, obj: lErrors } = addProperty(
+        errors,
+        key,
+        property,
+        index,
+      )
+
+      if (errorsChanged) {
+        localStorage.setItem('errors', JSON.stringify({ ...lErrors }))
+        setErrors({ ...lErrors })
+      }
+
+      const {
+        isChanged: validatedsChanged,
+        obj: validatedIns,
+      } = removeProperty(validatedInputs, key, property, index)
+      if (validatedsChanged) {
+        localStorage.setItem(
+          'validatedInputs',
+          JSON.stringify({ ...validatedIns }),
+        )
+        setValidatedInputs({ ...validatedIns })
+      }
+    }
   }
 
-  const updateFormState = (key: string, value: any) => {
+  const updateFormArray = (
+    key: string,
+    index: number,
+    property: string,
+    value: string,
+  ) => {
+    let array = (formState as any)[key]
+    let object: any = array[index] || [{}]
+    object[property] = value
+    array[index] = object
+
+    const updatedForm = { ...formState, [key]: array }
+    localStorage.setItem('formState', JSON.stringify(updatedForm))
+    validateFormArray(key, index, property, value.trim())
+    setFormState(updatedForm)
+  }
+
+  const updateFormState = (
+    key: string,
+    value: any,
+    index: number,
+    property: string,
+  ) => {
+    if (typeof index === 'number' && property) {
+      updateFormArray(key, index, property, value)
+      return
+    }
     let localValue = value
     if (key === 'phone_number') {
       localValue = formatPhoneNumber(value)
     }
-
     const updatedForm = { ...formState, [key]: localValue }
     localStorage.setItem('formState', JSON.stringify(updatedForm))
-    validateForm(key, localValue)
+    validateForm(key, localValue.trim())
     setFormState(updatedForm)
   }
 
-  const checkRequireds = (arr: any) => {
-    let isError = false
-    let dontMatch: any = {}
-    arr.forEach((key: string) => {
-      if (!validatedInputs[key]) {
-        console.log(key)
-        isError = true
-        dontMatch[key] = true
-      }
-    })
-    if (Object.keys(dontMatch)) {
-      localStorage.setItem('errors', JSON.stringify(dontMatch))
-      setErrors(dontMatch)
+  const checkRequireds = (requireds: string[]) => {
+    const { isErrors, errors: lErrors } = checkRequiredStrings(
+      requireds,
+      validatedInputs,
+      errors,
+    )
+    if (isErrors) {
+      localStorage.setItem('errors', JSON.stringify(lErrors))
+      setErrors(lErrors)
     }
-    return !isError
+    return !isErrors
+  }
+
+  const checkRequiredsInArray = (key: string) => {
+    const arr = (formState as any)[key]
+    const keyes = Object.keys(arr[0])
+
+    const valids = validatedInputs[key] || [{}]
+
+    const { errors: lErrors, isErrors } = checkErrors(arr, valids, keyes)
+
+    if (isErrors) {
+      const updatedErrors = { ...errors, [key]: lErrors }
+      localStorage.setItem('errors', JSON.stringify(updatedErrors))
+      setErrors(updatedErrors)
+    }
+
+    return !isErrors
+  }
+
+  const addFieldsStack = (property: string) => {
+    let array = (formState as any)[property]
+    array.push({ ...initialExperience })
+    const updatedForm = { ...formState, [property]: array }
+    localStorage.setItem('formState', JSON.stringify(updatedForm))
+    setFormState(updatedForm)
+  }
+
+  const resetForm = () => {
+    localStorage.removeItem('errors')
+    localStorage.removeItem('formState')
+    localStorage.removeItem('validatedInputs')
+
+    setFormState(initialFormState)
+    setErrors({})
+    setValidatedInputs({})
   }
 
   const value = useMemo(
@@ -168,6 +234,10 @@ export function FormProvider({ children }: FormProviderInterface) {
       validateForm,
       validatedInputs,
       checkRequireds,
+      addFieldsStack,
+      checkRequiredsInArray,
+      checkObjectFields,
+      resetForm,
     }),
     [formState, errors],
   )

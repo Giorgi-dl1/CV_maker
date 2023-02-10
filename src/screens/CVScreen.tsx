@@ -1,10 +1,14 @@
-import { Link, useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import vector from '../assets/Vector.png'
 import CV from '../components/CV'
 import Form from '../components/Form'
+import useForm from '../hooks/useForm'
 
 const CVScreen = () => {
   const { step } = useParams()
+  const navigate = useNavigate()
+
+  const { resetForm } = useForm()
 
   const getCurrentStep = (step: string) => {
     switch (step) {
@@ -12,6 +16,16 @@ const CVScreen = () => {
         return {
           name: 'პირადი ინფო',
           number: 1,
+        }
+      case 'experience':
+        return {
+          name: 'გამოცდილება',
+          number: 2,
+        }
+      case 'education':
+        return {
+          name: 'განათლება',
+          number: 3,
         }
       default:
         return {
@@ -34,14 +48,19 @@ const CVScreen = () => {
           number: 0,
         }
 
+  const clickHandler = () => {
+    resetForm()
+    navigate('/')
+  }
+
   return (
     <div className="relative flex min-h-screen">
-      <Link
-        to="/"
-        className="absolute w-[40px] rounded-full grid place-content-center h-[40px] bg-white left-[48px] top-[45px]"
+      <div
+        onClick={clickHandler}
+        className="absolute w-[40px] rounded-full cursor-pointer grid place-content-center h-[40px] bg-white left-[48px] top-[45px]"
       >
         <img src={vector} alt="" />
-      </Link>
+      </div>
       <div className="w-full bg-[#F9F9F9] px-[150px] py-[47px]">
         <div className="flex text-[#1A1A1A] pb-[12px] justify-between border-b border-[#1A1A1A]">
           <h1 className="text-2xl font-bold font-helavicta-bold">
