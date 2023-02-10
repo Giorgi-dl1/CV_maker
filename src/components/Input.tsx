@@ -24,6 +24,7 @@ const Input = ({ label, id, placeholder, rule }: InputInterface) => {
       </label>
       <div className="relative">
         <input
+          onBlur={(e) => updateFormState(id, e.target.value.trim())}
           value={id === 'phone_number' ? formatNumber(value) : value}
           className={`input ${
             validatedInputs[id]
