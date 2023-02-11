@@ -8,19 +8,21 @@ export type experience = {
 
 export type education = {
   institute: string
-  degree: number | null
+  degree?: number | null
+  degree_id?: number | null
   due_date: string
   description: string
 }
 
 export type formState = {
+  id?: number
   name: string
   surname: string
   email: string
   phone_number: string
   experiences: experience[]
   educations: education[]
-  image: string
+  image: any
   about_me?: string
 }
 
@@ -47,6 +49,8 @@ export interface FormInterface {
   resetForm: any
   degrees: Degrees | null
   displayDegree: any
+  setFormState: any
+  setLoading: any
 }
 export interface FormProviderInterface {
   children: React.ReactNode

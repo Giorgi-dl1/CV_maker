@@ -236,7 +236,15 @@ export function FormProvider({ children }: FormProviderInterface) {
     localStorage.removeItem('formState')
     localStorage.removeItem('validatedInputs')
 
-    setFormState(initialFormState)
+    setFormState({
+      name: '',
+      surname: '',
+      email: '',
+      phone_number: '',
+      experiences: [{ ...initialExperience }],
+      educations: [{ ...initialEducation }],
+      image: '',
+    })
     setErrors({})
     setValidatedInputs({})
   }
@@ -246,7 +254,7 @@ export function FormProvider({ children }: FormProviderInterface) {
       setLoading(true)
       try {
         const { data } = await axios.get(
-          'https://resume.redberryinternship.ge/api/degrees',
+          `${process.env.REACT_APP_BASE_URL}/api/degrees`,
         )
         setDegrees(data)
       } catch (error) {
@@ -258,7 +266,10 @@ export function FormProvider({ children }: FormProviderInterface) {
     fetchDegrees()
   }, [])
 
-  const displayDegree = (id: number) => {
+  const displayDegree = (id: number | string) => {
+    if (typeof id === 'string') {
+      return id
+    }
     const selectedDegree = (degrees as any)?.filter(
       (degree: any) => degree.id === id,
     )[0]
@@ -278,6 +289,8 @@ export function FormProvider({ children }: FormProviderInterface) {
       checkObjectFields,
       resetForm,
       degrees,
+      setFormState,
+      setLoading,
       displayDegree,
     }),
     [formState, errors, degrees, loading],

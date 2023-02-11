@@ -83,4 +83,9 @@
   .button {
     @apply px-[35px] cursor-pointer py-[14px] rounded bg-[#6B40E3] text-white max-w-max;
   }
+  .success-shadow {
+    box-shadow: 0px 0px 25px 3px rgba(0, 0, 0, 0.26);
+    -webkit-box-shadow: 0px 0px 25px 3px rgba(0, 0, 0, 0.26);
+    -moz-box-shadow: 0px 0px 25px 3px rgba(0, 0, 0, 0.26);
+  }
 }

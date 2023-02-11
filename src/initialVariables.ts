@@ -39,4 +39,6 @@ export const initialState: FormInterface = {
   resetForm: () => {},
   degrees: null,
   displayDegree: () => {},
+  setFormState: () => {},
+  setLoading: () => {},
 }

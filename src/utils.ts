@@ -1,3 +1,5 @@
+import { formState } from './types'
+
 export const formatNumber = (str: string) => {
   let number = str
   if (number.length === 13) {
@@ -25,6 +27,7 @@ export const checkExistance = (arr: any) => {
 export const checkObjectFields = (obj: any) => {
   const keyes = Object.keys(obj)
   let isFilled = false
+
   keyes.forEach((key) => {
     if (obj[key]?.length && !isFilled) {
       isFilled = true
@@ -169,4 +172,42 @@ export const formatPhoneNumber = (string: string) => {
   }
 
   return number
+}
+
+const filterFormArray = (arr: any) => {
+  return arr.filter((obj: any) => checkObjectFields(obj))
+}
+
+function dataUrlToBlob(dataUrl: string) {
+  try {
+    const parts = dataUrl.split(';base64,')
+    const contentType = parts[0].split(':')[1]
+    const byteCharacters = atob(parts[1])
+    const byteArrays = []
+    for (let i = 0; i < byteCharacters.length; i++) {
+      byteArrays.push(byteCharacters.charCodeAt(i))
+    }
+    const byteArray = new Uint8Array(byteArrays)
+    return new Blob([byteArray], { type: contentType })
+  } catch (error) {
+    return dataUrl
+  }
+}
+
+export const getPostProps = (obj: formState) => {
+  let props = { ...obj }
+
+  const educations = props.educations.map((education: any) => {
+    let obj = {
+      ...education,
+      degree_id: education?.degree?.toString(),
+    }
+    delete obj['degree']
+    return obj
+  })
+
+  props['experiences'] = filterFormArray(props.experiences)
+  props['educations'] = filterFormArray(educations)
+  props['image'] = dataUrlToBlob(props['image'])
+  return props
 }
