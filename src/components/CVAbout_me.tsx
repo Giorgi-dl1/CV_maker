@@ -6,6 +6,11 @@ import { formatNumber } from '../utils'
 const CVAbout_me = () => {
   const { formState } = useForm()
 
+  const imageURL =
+    formState['image'].split('/')[1] === 'storage'
+      ? `${process.env.REACT_APP_BASE_URL}${formState['image']}`
+      : formState['image']
+
   return (
     <div className="flex gap-2">
       <div className="w-[425px]">
@@ -43,7 +48,7 @@ const CVAbout_me = () => {
       <div>
         {formState['image'] && (
           <img
-            src={formState['image']}
+            src={imageURL}
             alt="hero"
             className="w-[246px] h-[246px] rounded-full object-cover"
           />
