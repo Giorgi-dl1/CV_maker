@@ -8,7 +8,7 @@ export type experience = {
 
 export type education = {
   institute: string
-  degree: string
+  degree: number | null
   due_date: string
   description: string
 }
@@ -24,6 +24,16 @@ export type formState = {
   about_me?: string
 }
 
+type degree = {
+  id: number
+  title: string
+}
+
+export interface Degrees {
+  degrees: degree[]
+  index: number
+}
+
 export interface FormInterface {
   formState: formState
   errors: any
@@ -35,6 +45,8 @@ export interface FormInterface {
   checkRequiredsInArray: any
   checkObjectFields: any
   resetForm: any
+  degrees: Degrees | null
+  displayDegree: any
 }
 export interface FormProviderInterface {
   children: React.ReactNode

@@ -1,3 +1,4 @@
+import EducationInputs from './EducationInputs'
 import ExperienceInputs from './ExperienceInputs'
 import PersonalInfoInputs from './PersonalInfoInputs'
 
@@ -12,6 +13,8 @@ const Form = ({ step }: FormInterface) => {
         return <PersonalInfoInputs />
       case 'experience':
         return <ExperienceInputs />
+      case 'education':
+        return <EducationInputs />
     }
   }
   return (

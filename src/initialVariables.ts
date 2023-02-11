@@ -1,9 +1,16 @@
-import { experience, FormInterface, formState } from './types'
+import { education, experience, FormInterface, formState } from './types'
 
 export const initialExperience: experience = {
   position: '',
   employer: '',
   start_date: '',
+  due_date: '',
+  description: '',
+}
+
+export const initialEducation: education = {
+  institute: '',
+  degree: null,
   due_date: '',
   description: '',
 }
@@ -16,7 +23,7 @@ export const initialFormState: formState = JSON.parse(
   email: '',
   phone_number: '',
   experiences: [{ ...initialExperience }],
-  educations: [],
+  educations: [{ ...initialEducation }],
   image: '',
 }
 export const initialState: FormInterface = {
@@ -30,4 +37,6 @@ export const initialState: FormInterface = {
   checkRequiredsInArray: () => {},
   checkObjectFields: () => {},
   resetForm: () => {},
+  degrees: null,
+  displayDegree: () => {},
 }

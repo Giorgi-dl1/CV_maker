@@ -26,7 +26,7 @@ export const checkObjectFields = (obj: any) => {
   const keyes = Object.keys(obj)
   let isFilled = false
   keyes.forEach((key) => {
-    if (obj[key].length && !isFilled) {
+    if (obj[key]?.length && !isFilled) {
       isFilled = true
     }
   })

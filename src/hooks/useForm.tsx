@@ -1,11 +1,14 @@
-import { createContext, useContext, useMemo, useState } from 'react'
+import axios from 'axios'
+import { createContext, useContext, useEffect, useMemo, useState } from 'react'
+import Loading from '../components/Loading'
 import {
+  initialEducation,
   initialExperience,
   initialFormState,
   initialState,
 } from '../initialVariables'
 import { patterns } from '../patterns'
-import { FormProviderInterface, formState } from '../types'
+import { Degrees, FormProviderInterface, formState } from '../types'
 import {
   addProperty,
   checkErrors,
@@ -18,6 +21,9 @@ import {
 const Form = createContext(initialState)
 
 export function FormProvider({ children }: FormProviderInterface) {
+  const [degrees, setDegrees] = useState<Degrees | null>(null)
+  const [loading, setLoading] = useState(true)
+
   const [formState, setFormState] = useState<formState>(initialFormState)
   const [errors, setErrors] = useState<any>(
     JSON.parse(localStorage.getItem('errors')!) || {},
@@ -154,7 +160,12 @@ export function FormProvider({ children }: FormProviderInterface) {
 
     const updatedForm = { ...formState, [key]: array }
     localStorage.setItem('formState', JSON.stringify(updatedForm))
-    validateFormArray(key, index, property, value.trim())
+
+    let lValue = value
+    if (typeof lValue === 'string') {
+      lValue = lValue.trim()
+    }
+    validateFormArray(key, index, property, lValue)
     setFormState(updatedForm)
   }
 
@@ -210,7 +221,11 @@ export function FormProvider({ children }: FormProviderInterface) {
 
   const addFieldsStack = (property: string) => {
     let array = (formState as any)[property]
-    array.push({ ...initialExperience })
+    if (property === 'experiences') {
+      array.push({ ...initialExperience })
+    } else if (property === 'educations') {
+      array.push({ ...initialEducation })
+    }
     const updatedForm = { ...formState, [property]: array }
     localStorage.setItem('formState', JSON.stringify(updatedForm))
     setFormState(updatedForm)
@@ -226,6 +241,30 @@ export function FormProvider({ children }: FormProviderInterface) {
     setValidatedInputs({})
   }
 
+  useEffect(() => {
+    const fetchDegrees = async () => {
+      setLoading(true)
+      try {
+        const { data } = await axios.get(
+          'https://resume.redberryinternship.ge/api/degrees',
+        )
+        setDegrees(data)
+      } catch (error) {
+        console.log(error)
+      } finally {
+        setLoading(false)
+      }
+    }
+    fetchDegrees()
+  }, [])
+
+  const displayDegree = (id: number) => {
+    const selectedDegree = (degrees as any)?.filter(
+      (degree: any) => degree.id === id,
+    )[0]
+    return selectedDegree?.title
+  }
+
   const value = useMemo(
     () => ({
       formState,
@@ -238,10 +277,16 @@ export function FormProvider({ children }: FormProviderInterface) {
       checkRequiredsInArray,
       checkObjectFields,
       resetForm,
+      degrees,
+      displayDegree,
     }),
-    [formState, errors],
+    [formState, errors, degrees, loading],
   )
-  return <Form.Provider value={value}>{children}</Form.Provider>
+  return (
+    <Form.Provider value={value}>
+      {loading ? <Loading /> : children}
+    </Form.Provider>
+  )
 }
 
 export default function useForm() {
