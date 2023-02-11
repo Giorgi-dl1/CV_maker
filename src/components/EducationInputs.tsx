@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import useForm from '../hooks/useForm'
 import EducationFieldsStack from './EducationFieldsStack'
 
@@ -6,9 +6,11 @@ const EducationInputs = () => {
   const { formState, addFieldsStack, checkRequiredsInArray } = useForm()
   const { educations } = formState
 
+  const navigate = useNavigate()
+
   const clickHandler = () => {
     if (checkRequiredsInArray('educations')) {
-      console.log('success')
+      navigate('/result')
     }
   }
 
