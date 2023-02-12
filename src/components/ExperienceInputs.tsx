@@ -34,7 +34,7 @@ const ExperienceInputs = () => {
       </div>
       <div
         onClick={() => addFieldsStack('experiences')}
-        className="button !bg-[#62A1EB] mt-[45px] mb-[111px]"
+        className="button hover:!bg-[#336ee6] !bg-[#62A1EB] mt-[45px] mb-[100px]"
       >
         მეტი გამოცდილების დამატება
       </div>

@@ -13,7 +13,7 @@ const CVAbout_me = () => {
 
   return (
     <div className="flex gap-2">
-      <div className="w-[425px]">
+      <div className="w-[425px] break-all">
         <h1 className="pb-[7px] pt-[20px] gap-[20px] break-words max-w-[425px] text-4xl font-helavicta-bold text-[#F93B1D] font-bold">
           {formState['name'] && <>{formState['name']}</>}{' '}
           {formState['surname'] && <>{formState['surname']}</>}

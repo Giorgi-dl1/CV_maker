@@ -81,7 +81,7 @@
     @apply flex md:gap-[16px] lg:gap-[56px] flex-wrap;
   }
   .button {
-    @apply px-[35px] cursor-pointer py-[14px] rounded bg-[#6B40E3] text-white max-w-max;
+    @apply px-[35px] cursor-pointer hover:bg-opacity-90 transition duration-300 py-[14px] rounded bg-[#6B40E3] text-white max-w-max;
   }
   .success-shadow {
     box-shadow: 0px 0px 25px 3px rgba(0, 0, 0, 0.26);
@@ -89,7 +89,7 @@
     -moz-box-shadow: 0px 0px 25px 3px rgba(0, 0, 0, 0.26);
   }
   .cv-list-wrapper {
-    @apply mt-[19px] space-y-[15px] border-t border-[#C8C8C8];
+    @apply mt-[19px] space-y-[15px] border-t border-[#C8C8C8] break-all;
   }
   input[type='text'] {
     @apply !pr-[40px];

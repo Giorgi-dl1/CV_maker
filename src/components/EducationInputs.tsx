@@ -36,7 +36,7 @@ const EducationInputs = () => {
       </div>
       <div
         onClick={() => addFieldsStack('educations')}
-        className="button !bg-[#62A1EB] mt-[45px] mb-[200px]"
+        className="button hover:!bg-[#336ee6] !bg-[#62A1EB] mt-[45px] mb-[185px]"
       >
         სხვა სასწავლებლის დამატება
       </div>

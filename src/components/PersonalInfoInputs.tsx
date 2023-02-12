@@ -62,7 +62,7 @@ const PersonalInfoInputs = () => {
         </div>
         <label
           htmlFor="image"
-          className="px-[19px] cursor-pointer py-[5px] text-white bg-[#0E80BF] rounded"
+          className="px-[19px] hover:bg-opacity-80 transition duration-300 cursor-pointer py-[5px] text-white bg-[#0E80BF] rounded"
         >
           ატვირთვა
         </label>
@@ -107,7 +107,7 @@ const PersonalInfoInputs = () => {
         id="phone_number"
         rule="უნდა აკმაყოფილებდეს ქართული მობილურის ნომრის ფორმატს"
       />
-      <div className="mt-[160px] flex justify-end">
+      <div className="mt-[140px] flex justify-end">
         <div onClick={() => clickHandler()} className="button">
           შემდეგი
         </div>
