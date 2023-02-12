@@ -68,6 +68,8 @@ export const checkErrors = (arr: any, valids: any, keyes: any) => {
             }
           }
         })
+      } else {
+        errors[index] = {}
       }
     }
   })
@@ -163,12 +165,11 @@ export const formatPhoneNumber = (string: string) => {
   let number: any = string
 
   if (!number.length) {
-    number = ''
-    return number
+    return ''
   }
   number = number.replace(/[^\+\d]/g, '')
-  if (!number.startsWith('+995') && number.length > 3) {
-    number = `+995${number}`
+  if (!number.startsWith('+995') && number.length >= 3) {
+    number = number.startsWith('995') ? `+${number}` : `+995${number}`
   }
 
   return number
@@ -210,4 +211,19 @@ export const getPostProps = (obj: formState) => {
   props['educations'] = filterFormArray(educations)
   props['image'] = dataUrlToBlob(props['image'])
   return props
+}
+
+export const getPageTitle = (pathname: string) => {
+  switch (pathname) {
+    case '/':
+      return 'Redberry'
+    case '/cv/personal_info':
+      return 'About Me'
+    case '/cv/experience':
+      return 'Experience'
+    case '/cv/education':
+      return 'Education'
+    default:
+      return 'Error 404'
+  }
 }

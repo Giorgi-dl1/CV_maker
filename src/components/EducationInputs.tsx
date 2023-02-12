@@ -1,18 +1,27 @@
+import { useEffect } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import useForm from '../hooks/useForm'
 import EducationFieldsStack from './EducationFieldsStack'
 
 const EducationInputs = () => {
-  const { formState, addFieldsStack, checkRequiredsInArray } = useForm()
+  const { formState, addFieldsStack, checkFormState } = useForm()
   const { educations } = formState
 
   const navigate = useNavigate()
 
   const clickHandler = () => {
-    if (checkRequiredsInArray('educations')) {
+    if (checkFormState('educations')) {
       navigate('/result')
     }
   }
+
+  useEffect(() => {
+    if (!checkFormState('personal_info')) {
+      navigate('/cv/personal_info')
+    } else if (!checkFormState('experiences')) {
+      navigate('/cv/experience')
+    }
+  }, [])
 
   return (
     <div>

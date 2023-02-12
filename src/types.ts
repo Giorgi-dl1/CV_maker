@@ -42,15 +42,14 @@ export interface FormInterface {
   updateFormState: any
   validateForm: any
   validatedInputs: any
-  checkRequireds: any
   addFieldsStack: any
-  checkRequiredsInArray: any
   checkObjectFields: any
   resetForm: any
   degrees: Degrees | null
   displayDegree: any
   setFormState: any
   setLoading: any
+  checkFormState: any
 }
 export interface FormProviderInterface {
   children: React.ReactNode

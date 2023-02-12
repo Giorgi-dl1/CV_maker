@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom'
 
 const PersonalInfoInputs = () => {
   const navigate = useNavigate()
-  const { updateFormState, formState, errors, checkRequireds } = useForm()
+  const { updateFormState, formState, errors, checkFormState } = useForm()
 
   const imageHandler = (e: React.FormEvent<HTMLInputElement>) => {
     const target = e.target as HTMLInputElement
@@ -29,10 +29,8 @@ const PersonalInfoInputs = () => {
     updateFormState('about_me', target.value)
   }
 
-  const requiredFields = ['name', 'surname', 'image', 'email', 'phone_number']
-
   const clickHandler = () => {
-    if (checkRequireds(requiredFields)) {
+    if (checkFormState('personal_info')) {
       navigate('/cv/experience')
     }
   }

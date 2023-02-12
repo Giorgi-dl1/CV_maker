@@ -869,10 +869,6 @@ input[type='text'] {
   margin-bottom: 1rem;
 }
 
-.mb-\[8px\] {
-  margin-bottom: 8px;
-}
-
 .mt-\[45px\] {
   margin-top: 45px;
 }
@@ -913,32 +909,8 @@ input[type='text'] {
   margin-top: 160px;
 }
 
-.-mb-1 {
-  margin-bottom: -0.25rem;
-}
-
-.-mb-2 {
-  margin-bottom: -0.5rem;
-}
-
-.mb-1 {
-  margin-bottom: 0.25rem;
-}
-
-.mb-\[18px\] {
-  margin-bottom: 18px;
-}
-
-.mb-\[30px\] {
-  margin-bottom: 30px;
-}
-
-.mb-\[100px\] {
-  margin-bottom: 100px;
-}
-
-.\!mb-\[100px\] {
-  margin-bottom: 100px !important;
+.mt-\[140px\] {
+  margin-top: 140px;
 }
 
 .inline {
@@ -1003,6 +975,10 @@ input[type='text'] {
   min-height: 179px;
 }
 
+.min-h-\[123px\] {
+  min-height: 123px;
+}
+
 .min-h-\[1080px\] {
   min-height: 1080px;
 }
@@ -1013,10 +989,6 @@ input[type='text'] {
 
 .min-h-screen {
   min-height: 100vh;
-}
-
-.min-h-\[123px\] {
-  min-height: 123px;
 }
 
 .w-full {
@@ -1261,6 +1233,11 @@ input[type='text'] {
   border-color: rgb(26 26 26 / var(--tw-border-opacity));
 }
 
+.bg-\[\#f9f9f9\] {
+  --tw-bg-opacity: 1;
+  background-color: rgb(249 249 249 / var(--tw-bg-opacity));
+}
+
 .bg-white {
   --tw-bg-opacity: 1;
   background-color: rgb(255 255 255 / var(--tw-bg-opacity));
@@ -1284,11 +1261,6 @@ input[type='text'] {
 .bg-\[\#1A1A1A\] {
   --tw-bg-opacity: 1;
   background-color: rgb(26 26 26 / var(--tw-bg-opacity));
-}
-
-.bg-\[\#f9f9f9\] {
-  --tw-bg-opacity: 1;
-  background-color: rgb(249 249 249 / var(--tw-bg-opacity));
 }
 
 .fill-red-600 {
@@ -1364,6 +1336,10 @@ input[type='text'] {
   padding-bottom: 40px;
 }
 
+.pb-\[120px\] {
+  padding-bottom: 120px;
+}
+
 .pb-\[7px\] {
   padding-bottom: 7px;
 }
@@ -1376,32 +1352,16 @@ input[type='text'] {
   padding-top: 24px;
 }
 
-.pb-\[58px\] {
-  padding-bottom: 58px;
-}
-
-.pb-1 {
-  padding-bottom: 0.25rem;
-}
-
-.pb-\[12px\] {
-  padding-bottom: 12px;
-}
-
-.pb-2 {
-  padding-bottom: 0.5rem;
-}
-
 .pb-\[8px\] {
   padding-bottom: 8px;
 }
 
-.pb-\[100px\] {
-  padding-bottom: 100px;
+.pb-\[58px\] {
+  padding-bottom: 58px;
 }
 
-.pb-\[120px\] {
-  padding-bottom: 120px;
+.pb-\[12px\] {
+  padding-bottom: 12px;
 }
 
 .text-4xl {

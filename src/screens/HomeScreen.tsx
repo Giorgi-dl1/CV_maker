@@ -3,9 +3,14 @@ import logo from '../assets/logo.png'
 import background from '../assets/background.png'
 import logo2 from '../assets/logo2.png'
 import { Link } from 'react-router-dom'
+import useForm from '../hooks/useForm'
+import { formStateStarter } from '../initialVariables'
 const HomeScreen = () => {
+  const { resetForm, setFormState } = useForm()
   useEffect(() => {
-    document.title = 'Redberry'
+    resetForm()
+    setFormState({ ...formStateStarter })
+    localStorage.removeItem('success')
   }, [])
   return (
     <div className="relative w-screen h-screen overflow-hidden x-padding">

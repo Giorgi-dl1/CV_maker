@@ -16,19 +16,23 @@ const ResultScreen = () => {
   )
   const navigate = useNavigate()
 
-  const {
-    formState,
-    resetForm,
-    setFormState,
-    checkRequiredsInArray,
-  } = useForm()
+  const { formState, resetForm, setFormState, checkFormState } = useForm()
 
   useEffect(() => {
-    if (!checkRequiredsInArray('educations')) {
+    if (success) {
+      localStorage.removeItem('success')
+      resetForm()
+      setSuccess(false)
+      navigate('/')
+      return
+    }
+    if (!checkFormState('educations')) {
       navigate('/cv/education')
     } else {
       const props = getPostProps(formState)
       const fetchDegrees = async (props: formState) => {
+        setSuccess(false)
+        localStorage.removeItem('success')
         try {
           const { data } = await axios.post(
             `${process.env.REACT_APP_BASE_URL}/api/cvs`,
@@ -39,9 +43,11 @@ const ResultScreen = () => {
               },
             },
           )
+          setSuccess(true)
+          localStorage.setItem('success', 'true')
           setShowMessage(true)
-          // resetForm()
-          // setFormState(data)
+          resetForm()
+          setFormState(data)
         } catch (error) {
           alert(error)
         }
@@ -50,19 +56,14 @@ const ResultScreen = () => {
     }
   }, [])
 
-  const clickHandler = () => {
-    resetForm()
-    navigate('/')
-  }
-
   return (
     <div className="relative min-h-screen py-[54px] flex justify-center">
-      <div
-        onClick={clickHandler}
+      <a
+        href="/"
         className="absolute w-[40px] bg-[#F9F9F9] rounded-full cursor-pointer grid place-content-center h-[40px] left-[48px] top-[45px]"
       >
         <img src={vector} alt="" />
-      </div>
+      </a>
       <CV />
       <div className="absolute right-[70px]">
         <div

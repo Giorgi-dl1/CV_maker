@@ -15,9 +15,7 @@ export const initialEducation: education = {
   description: '',
 }
 
-export const initialFormState: formState = JSON.parse(
-  localStorage.getItem('formState')!,
-) || {
+export const formStateStarter = {
   name: '',
   surname: '',
   email: '',
@@ -26,19 +24,23 @@ export const initialFormState: formState = JSON.parse(
   educations: [{ ...initialEducation }],
   image: '',
 }
+
+export const initialFormState: formState = JSON.parse(
+  localStorage.getItem('formState')!,
+) || { ...formStateStarter }
+
 export const initialState: FormInterface = {
   formState: initialFormState,
   errors: {},
   updateFormState: () => {},
   validateForm: () => {},
   validatedInputs: {},
-  checkRequireds: () => {},
   addFieldsStack: () => {},
-  checkRequiredsInArray: () => {},
   checkObjectFields: () => {},
   resetForm: () => {},
   degrees: null,
   displayDegree: () => {},
   setFormState: () => {},
   setLoading: () => {},
+  checkFormState: () => {},
 }

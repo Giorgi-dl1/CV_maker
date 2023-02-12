@@ -2,6 +2,7 @@ import axios from 'axios'
 import { createContext, useContext, useEffect, useMemo, useState } from 'react'
 import Loading from '../components/Loading'
 import {
+  formStateStarter,
   initialEducation,
   initialExperience,
   initialFormState,
@@ -189,32 +190,36 @@ export function FormProvider({ children }: FormProviderInterface) {
     setFormState(updatedForm)
   }
 
-  const checkRequireds = (requireds: string[]) => {
-    const { isErrors, errors: lErrors } = checkRequiredStrings(
-      requireds,
-      validatedInputs,
-      errors,
-    )
-    if (isErrors) {
-      localStorage.setItem('errors', JSON.stringify(lErrors))
-      setErrors(lErrors)
+  const checkFormState = (key: string) => {
+    if (key === 'personal_info') {
+      const requiredFields = [
+        'name',
+        'surname',
+        'image',
+        'email',
+        'phone_number',
+      ]
+      const { isErrors, errors: lErrors } = checkRequiredStrings(
+        requiredFields,
+        validatedInputs,
+        errors,
+      )
+      if (isErrors) {
+        localStorage.setItem('errors', JSON.stringify(lErrors))
+        setErrors(lErrors)
+      }
+      return !isErrors
     }
-    return !isErrors
-  }
-
-  const checkRequiredsInArray = (key: string) => {
     const arr = (formState as any)[key]
-    const keyes = Object.keys(arr[0])
+    const keyes = Object?.keys(arr[0])
 
     const valids = validatedInputs[key] || [{}]
 
     const { errors: lErrors, isErrors } = checkErrors(arr, valids, keyes)
 
-    if (isErrors) {
-      const updatedErrors = { ...errors, [key]: lErrors }
-      localStorage.setItem('errors', JSON.stringify(updatedErrors))
-      setErrors(updatedErrors)
-    }
+    const updatedErrors = { ...errors, [key]: lErrors }
+    localStorage.setItem('errors', JSON.stringify(updatedErrors))
+    setErrors(updatedErrors)
 
     return !isErrors
   }
@@ -235,16 +240,7 @@ export function FormProvider({ children }: FormProviderInterface) {
     localStorage.removeItem('errors')
     localStorage.removeItem('formState')
     localStorage.removeItem('validatedInputs')
-
-    setFormState({
-      name: '',
-      surname: '',
-      email: '',
-      phone_number: '',
-      experiences: [{ ...initialExperience }],
-      educations: [{ ...initialEducation }],
-      image: '',
-    })
+    setFormState({ ...formStateStarter })
     setErrors({})
     setValidatedInputs({})
   }
@@ -283,15 +279,14 @@ export function FormProvider({ children }: FormProviderInterface) {
       updateFormState,
       validateForm,
       validatedInputs,
-      checkRequireds,
       addFieldsStack,
-      checkRequiredsInArray,
       checkObjectFields,
       resetForm,
       degrees,
       setFormState,
       setLoading,
       displayDegree,
+      checkFormState,
     }),
     [formState, errors, degrees, loading],
   )

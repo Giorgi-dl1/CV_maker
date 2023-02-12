@@ -17,11 +17,7 @@ const Form = ({ step }: FormInterface) => {
         return <EducationInputs />
     }
   }
-  return (
-    <form action="" className="mt-[77px]">
-      {renderInputs(step)}
-    </form>
-  )
+  return <form className="mt-[77px]">{renderInputs(step)}</form>
 }
 
 export default Form
