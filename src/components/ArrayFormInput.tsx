@@ -1,7 +1,7 @@
 import useForm from '../hooks/useForm'
 import passes from '../assets/passes.png'
 import errorIcon from '../assets/error.png'
-import { ChangeEvent, useEffect } from 'react'
+import { ChangeEvent } from 'react'
 
 interface InputInterface {
   label: string

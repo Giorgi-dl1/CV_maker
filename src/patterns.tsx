@@ -1,7 +1,7 @@
 export const patterns: any = {
   name: /^[ა-ჰ\s]{2,}$/,
   surname: /^[ა-ჰ\s]{2,}$/,
-  email: /^[a-zA-Z0-9._%+-]+@redberry.ge$/,
+  email: /^[a-zA-Z0-9._%+-]+@redberry[.]ge$/,
   phone_number: /^(\+9955\d{8})$/,
   position: /^.{2,}$/,
   employer: /^.{2,}$/,
