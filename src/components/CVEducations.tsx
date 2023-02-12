@@ -17,8 +17,8 @@ const CVEducations = () => {
   }, [formState])
 
   return exists ? (
-    <div className="mt-[19px] border-t border-[#C8C8C8]">
-      <h2 className="pt-[24px] pb-[15px] cv-header">განათლება</h2>
+    <div className="cv-list-wrapper">
+      <h2 className="pt-[24px] cv-header">განათლება</h2>
       {educations.map((education, index) => {
         return checkObjectFields(education) ? (
           <div key={index}>

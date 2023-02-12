@@ -11,6 +11,9 @@ import { formState } from '../types'
 
 const ResultScreen = () => {
   const [showMessage, setShowMessage] = useState(false)
+  const [success, setSuccess] = useState<string | boolean>(
+    localStorage.getItem('success') || false,
+  )
   const navigate = useNavigate()
 
   const {
@@ -65,7 +68,7 @@ const ResultScreen = () => {
         <div
           className={`${
             showMessage ? '!scale-100 !opacity-100' : 'pointer-events-none'
-          } scale-75 opacity-0 transition-all duration-500 relative rounded w-[427px] h-[167px] px-[30px] py-[40px]  bg-white success-shadow`}
+          } scale-75 opacity-0 z-50 transition-all duration-500 relative rounded w-[427px] h-[167px] px-[30px] py-[40px]  bg-white success-shadow`}
         >
           <h2 className="font-helavicta-medium font-medium text-[28px]">
             რეზიუმე წარმატებით გაიგზავნა 🎉

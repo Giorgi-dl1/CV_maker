@@ -8,15 +8,21 @@ const CV = () => {
   const { pathname } = useLocation()
 
   return (
-    <div
-      className={`max-w-[822px] ${
-        pathname === '/result' && 'border-[0.8px] border-black'
-      } min-w-[822px] relative w-full px-[75px] py-[48px] min-h-[1080px] max-h-max`}
-    >
-      <CVAbout_me />
-      <CVExperiences />
-      <CVEducations />
-      <img className="absolute bottom-[44px] left-[78px]" src={cvLogo} alt="" />
+    <div className="bg-[#f9f9f9]">
+      <div
+        className={`max-w-[822px] ${
+          pathname === '/result' && 'border-[0.8px] border-black'
+        } min-w-[822px] pb-[120px] bg-white relative w-full px-[75px] py-[48px] min-h-[1080px] max-h-max`}
+      >
+        <CVAbout_me />
+        <CVExperiences />
+        <CVEducations />
+        <img
+          className="absolute bottom-[44px] left-[78px]"
+          src={cvLogo}
+          alt=""
+        />
+      </div>
     </div>
   )
 }

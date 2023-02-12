@@ -109,7 +109,7 @@ const PersonalInfoInputs = () => {
         id="phone_number"
         rule="უნდა აკმაყოფილებდეს ქართული მობილურის ნომრის ფორმატს"
       />
-      <div className="mt-[160px] mb-[65px] flex justify-end">
+      <div className="mt-[160px] flex justify-end">
         <div onClick={() => clickHandler()} className="button">
           შემდეგი
         </div>

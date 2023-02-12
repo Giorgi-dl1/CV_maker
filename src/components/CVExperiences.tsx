@@ -17,8 +17,8 @@ const CVExperiences = () => {
   }, [formState])
 
   return exists ? (
-    <div className="mt-[19px] border-t border-[#C8C8C8]">
-      <h2 className="pt-[24px] pb-[15px] cv-header">გამოცდილება</h2>
+    <div className="cv-list-wrapper">
+      <h2 className="pt-[24px] cv-header">გამოცდილება</h2>
       {experiences.map((experience, index) => {
         return checkObjectFields(experience) ? (
           <div key={index}>

@@ -27,9 +27,11 @@ const Degrees = ({ index }: { index: number }) => {
   }
 
   return (
-    <div className="relative flex-grow min-w-[370px]">
+    <div className="relative min-w-[370px]">
       <div
-        className={`label ${errorsObj['degree'] ? '!text-[#EF5050]' : null}`}
+        className={`label pb-[8px] ${
+          errorsObj['degree'] ? '!text-[#EF5050]' : null
+        }`}
       >
         ხარისხი
       </div>

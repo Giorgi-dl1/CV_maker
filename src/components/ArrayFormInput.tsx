@@ -107,8 +107,10 @@ const ArrayFormInput = ({
         }
         name={id}
         id={id}
-        placeholder="ზოგადი ინფო შენ შესახებ"
-        className={`resize-none input h-max min-h-[103px] ${
+        placeholder={placeholder}
+        className={`resize-none  input h-max ${
+          id === 'educations' ? 'min-h-[179px]' : 'min-h-[123px]'
+        }  ${
           validsObj[property]
             ? '!border-[#98E37E]'
             : errorsObj[property]
