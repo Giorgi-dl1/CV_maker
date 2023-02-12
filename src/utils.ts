@@ -2,8 +2,20 @@ import { formState } from './types'
 
 export const formatNumber = (str: string) => {
   let number = str
-  if (number.length === 13) {
-    number = `${number.slice(0, 4)} ${number.slice(4, 7)} ${number.slice(
+  if (number.length >= 5 && number.length < 8) {
+    return `${number.slice(0, 4)} ${number.slice(4, 7)}`
+  }
+  if (number.length >= 8 && number.length < 10) {
+    return `${number.slice(0, 4)} ${number.slice(4, 7)} ${number.slice(7, 9)}`
+  }
+  if (number.length >= 10 && number.length < 12) {
+    return `${number.slice(0, 4)} ${number.slice(4, 7)} ${number.slice(
+      7,
+      9,
+    )} ${number.slice(9, 11)}`
+  }
+  if (number.length >= 12 && number.length <= 13) {
+    return `${number.slice(0, 4)} ${number.slice(4, 7)} ${number.slice(
       7,
       9,
     )} ${number.slice(9, 11)} ${number.slice(11)}`
@@ -167,10 +179,26 @@ export const formatPhoneNumber = (string: string) => {
   if (!number.length) {
     return ''
   }
-  number = number.replace(/[^\+\d]/g, '')
-  if (!number.startsWith('+995') && number.length >= 3) {
+  if (number.substring(1).includes('+')) {
+    const firstChar = number[0]
+    const rest = number.substring(1).split('+').join('')
+    number = `${firstChar}${rest}`
+  }
+  if (
+    number.startsWith('+') &&
+    number.length > 2 &&
+    !number.startsWith('+99')
+  ) {
+    number = `+995${number.substring(1)}`
+  }
+  if (
+    !number.startsWith('+995') &&
+    number.length >= 3 &&
+    !number.startsWith('+')
+  ) {
     number = number.startsWith('995') ? `+${number}` : `+995${number}`
   }
+  number = number.replace(/[^\+\d]/g, '')
 
   return number
 }
