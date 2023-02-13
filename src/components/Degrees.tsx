@@ -27,49 +27,57 @@ const Degrees = ({ index }: { index: number }) => {
   }
 
   return (
-    <div className="relative min-w-[370px]">
-      <div
-        className={`label pb-[8px] ${
-          errorsObj['degree'] ? '!text-[#EF5050]' : null
-        }`}
-      >
-        ხარისხი
+    <>
+      <div className="relative min-w-[370px]">
+        <div
+          className={`label pb-[8px] ${
+            errorsObj['degree'] ? '!text-[#EF5050]' : null
+          }`}
+        >
+          ხარისხი
+        </div>
+        <div
+          onClick={() => setShowItems(!showItems)}
+          className={`input bg-white cursor-pointer flex justify-between items-center ${
+            validsObj['degree']
+              ? '!border-[#98E37E]'
+              : errorsObj['degree']
+              ? '!border-[#EF5050]'
+              : null
+          }`}
+        >
+          <span>
+            {degreeId ? (
+              displayDegree(degreeId)
+            ) : (
+              <span className="text-[#909090]">აირჩიეთ ხარისხი</span>
+            )}
+          </span>
+          <img className="-rotate-90 w-[6px]" src={vector} alt="" />
+        </div>
+        <div
+          className={`${
+            !showItems && '!scale-75  !opacity-0 pointer-events-none'
+          } shadow-xl z-[60] transition-all overflow-hidden duration-300 scale-100 opacity-100 absolute left-0 right-0 bg-white text-[#1A1A1A] rounded`}
+        >
+          {(degrees as any)?.map((degree: any) => (
+            <div
+              onClick={() => setDegree(degree.id)}
+              key={degree.id}
+              className="py-[10px] transition duration-300 hover:bg-[#e9e9e9] px-[16px] cursor-pointer"
+            >
+              {degree.title}
+            </div>
+          ))}
+        </div>
       </div>
-      <div
-        onClick={() => setShowItems(!showItems)}
-        className={`input bg-white cursor-pointer flex justify-between items-center ${
-          validsObj['degree']
-            ? '!border-[#98E37E]'
-            : errorsObj['degree']
-            ? '!border-[#EF5050]'
-            : null
-        }`}
-      >
-        <span>
-          {degreeId ? (
-            displayDegree(degreeId)
-          ) : (
-            <span className="text-[#909090]">აირჩიეთ ხარისხი</span>
-          )}
-        </span>
-        <img className="-rotate-90 w-[6px]" src={vector} alt="" />
-      </div>
-      <div
-        className={`${
-          !showItems && '!scale-75 !opacity-0 pointer-events-none'
-        } transition-all overflow-hidden duration-300 scale-100 opacity-100 absolute left-0 right-0 z-10 bg-white text-[#1A1A1A] rounded`}
-      >
-        {(degrees as any)?.map((degree: any) => (
-          <div
-            onClick={() => setDegree(degree.id)}
-            key={degree.id}
-            className="py-[10px] transition duration-300 hover:bg-[#e9e9e9] px-[16px] cursor-pointer"
-          >
-            {degree.title}
-          </div>
-        ))}
-      </div>
-    </div>
+      {showItems && (
+        <div
+          onClick={() => setShowItems(false)}
+          className="absolute top-0 bottom-0 left-0 right-0 z-50"
+        />
+      )}
+    </>
   )
 }
 
