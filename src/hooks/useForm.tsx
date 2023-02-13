@@ -157,6 +157,15 @@ export function FormProvider({ children }: FormProviderInterface) {
     let array = (formState as any)[key]
     let object: any = array[index] || [{}]
     object[property] = value
+
+    if (!checkObjectFields(object) && index !== 0) {
+      let arrErrors = [...errors[key]] || []
+      arrErrors[index] = {}
+      const lErrors = { ...errors, [key]: arrErrors }
+      localStorage.setItem('errors', JSON.stringify(lErrors))
+      setErrors(lErrors)
+    }
+
     array[index] = object
 
     const updatedForm = { ...formState, [key]: array }
