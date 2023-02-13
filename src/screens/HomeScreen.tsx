@@ -22,13 +22,13 @@ const HomeScreen = () => {
           src={background}
           alt=""
           loading="lazy"
-          className="absolute top-0 w-screen h-screen object-cover left-0 z-[-2]"
+          className="absolute pointer-events-none top-0 w-screen h-screen object-cover left-0 z-[-2]"
         />
         <img
           src={logo2}
           alt=""
           loading="lazy"
-          className="w-[150px] h-[150px] md:w-[299px] md:h-[299px] absolute left-[50%] top-[50%] -translate-y-[25%] md:translate-x-[40%]"
+          className="w-[150px] h-[150px] pointer-events-none md:w-[299px] md:h-[299px] absolute left-[50%] top-[50%] -translate-y-[25%] md:translate-x-[40%]"
         />
         <Link to={'/cv/personal_info'}>
           <button className="absolute top-[50%] -translate-y-[50%] left-[50%] -translate-x-[50%] w-[464px] max-w-[90vw] py-[18px] bg-[#1A1A1A] text-white rounded-lg text-xl font-medium">
