@@ -158,14 +158,6 @@ export function FormProvider({ children }: FormProviderInterface) {
     let object: any = array[index] || [{}]
     object[property] = value
 
-    if (!checkObjectFields(object) && index !== 0) {
-      let arrErrors = [...errors[key]] || []
-      arrErrors[index] = {}
-      const lErrors = { ...errors, [key]: arrErrors }
-      localStorage.setItem('errors', JSON.stringify(lErrors))
-      setErrors(lErrors)
-    }
-
     array[index] = object
 
     const updatedForm = { ...formState, [key]: array }
@@ -177,6 +169,14 @@ export function FormProvider({ children }: FormProviderInterface) {
     }
     validateFormArray(key, index, property, lValue)
     setFormState(updatedForm)
+
+    if (!value.length && !checkObjectFields(object) && index !== 0) {
+      let arrErrors = [...errors[key]] || []
+      arrErrors[index] = {}
+      const lErrors = { ...errors, [key]: arrErrors }
+      localStorage.setItem('errors', JSON.stringify(lErrors))
+      setErrors(lErrors)
+    }
   }
 
   const updateFormState = (
