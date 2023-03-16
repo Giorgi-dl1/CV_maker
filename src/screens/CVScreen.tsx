@@ -54,14 +54,14 @@ const CVScreen = () => {
   }
 
   return (
-    <div className="relative flex min-h-screen">
+    <div className="relative flex flex-col min-h-screen md:flex-row">
       <div
         onClick={clickHandler}
         className="absolute w-[40px] rounded-full cursor-pointer grid place-content-center h-[40px] bg-white left-[48px] top-[45px]"
       >
         <img src={vector} alt="" />
       </div>
-      <div className="w-full bg-[#F9F9F9] px-[150px] py-[47px]">
+      <div className="w-[822px] md:w-full bg-[#F9F9F9] px-[100px] md:px-[20px] lg:px-[60px] py-[47px]">
         <div className="flex text-[#1A1A1A] pb-[12px] justify-between border-b border-[#1A1A1A]">
           <h1 className="text-2xl font-bold font-helavicta-bold">
             {currentStep.name}
